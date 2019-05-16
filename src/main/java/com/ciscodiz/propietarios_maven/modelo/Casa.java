@@ -5,6 +5,8 @@
  */
 package com.ciscodiz.propietarios_maven.modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author noseq
@@ -20,6 +22,7 @@ public class Casa {
          CASA
          ,PISO
      }
+     
      private static int idCasaStatic = 0;
      private final int idCasaInstance;
      private int metrosCuadrados;
@@ -28,9 +31,14 @@ public class Casa {
      private TipoVivienda tipoVivienda;
      private Integer planta;
      private Integer piso;
-
+     private String via;
+     private ArrayList<Propietario> propietariosList;
+     private final String nombreTabla; 
+    /*
+        implementar constructor de copia necesario para pasar objetos a ControlPersistencia
+     */
     public Casa(int metrosCuadrados, int numero, TipoVia tipoVia
-            , TipoVivienda tipoVivienda, Integer planta, Integer piso) {
+            , TipoVivienda tipoVivienda, Integer planta, Integer piso, String via) {
         idCasaInstance = idCasaStatic++;
         this.metrosCuadrados = metrosCuadrados;
         this.numero = numero;
@@ -38,8 +46,50 @@ public class Casa {
         this.tipoVivienda = tipoVivienda;
         this.planta = planta;
         this.piso = piso;
+        this.via = via;
+        propietariosList = new ArrayList<>();
+        nombreTabla = "casas";
+    }
+    
+    public Casa(Casa toCopy){
+        idCasaInstance = idCasaStatic;
+        this.metrosCuadrados = toCopy.metrosCuadrados;
+        this.numero = toCopy.metrosCuadrados;
+        this.numero = toCopy.numero;
+        this.tipoVia = toCopy.tipoVia;
+        this.tipoVivienda = toCopy.tipoVivienda;
+        this.planta = toCopy.planta;
+        this.piso = toCopy.piso;
+        this.via = toCopy.via;
+        propietariosList = new ArrayList<>();
+        nombreTabla = toCopy.nombreTabla;
+    }
+   /* 
+    public String insertData(){
+        return "INSERT INTO "+nombreTabla+" "
+    }
+    */
+
+    public String getVia() {
+        return via;
     }
 
+    public void setVia(String via) {
+        this.via = via;
+    }
+    
+    public int getIdCasaInstance() {
+        return idCasaInstance;
+    }
+
+    public ArrayList<Propietario> getPropietariosList() {
+        return propietariosList;
+    }
+    
+    public boolean addPropietario(Propietario p){
+        return propietariosList.add(p);
+    }
+    
     public static int getIdCasaStatic() {
         return idCasaStatic;
     }
